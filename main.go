@@ -21,7 +21,7 @@ func main() {
 }
 
 func healthCheck() bool {
-	simulateHealth, ok := os.LookupEnv("HC_SIMULATE_HEALTH")
+	simulateHealth, ok := os.LookupEnv("NHC_SIMULATE_HEALTH")
 	if ok {
 		log.Printf("Simulating node health with %s\n", simulateHealth)
 		if simulateHealth == "true" {
@@ -31,18 +31,18 @@ func healthCheck() bool {
 		}
 	}
 
-	maxBlockLagEnv, ok := os.LookupEnv("HC_MAX_BLOCK_LAG")
+	maxBlockLagEnv, ok := os.LookupEnv("NHC_MAX_BLOCK_LAG")
 	if !ok {
-		log.Fatal("Please provide $HC_MAX_BLOCK_LAG")
+		log.Fatal("Please provide $NHC_MAX_BLOCK_LAG")
 	}
 
 	maxBlockLag, err := strconv.Atoi(maxBlockLagEnv)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	selfUrl, ok := os.LookupEnv("HC_SELF_URL")
+	selfUrl, ok := os.LookupEnv("NHC_SELF_URL")
 	if !ok {
-		log.Fatal("Please provide $HC_SELF_URL")
+		log.Fatal("Please provide $NHC_SELF_URL")
 	}
 
 	syncing := node_health_check.GetSyncingState(selfUrl)
@@ -51,9 +51,9 @@ func healthCheck() bool {
 		return false
 	}
 
-	peerUrlsEnv, ok := os.LookupEnv("HC_PEER_URLS")
+	peerUrlsEnv, ok := os.LookupEnv("NHC_PEER_URLS")
 	if !ok {
-		log.Fatal("Please provide $HC_PEER_URLS")
+		log.Fatal("Please provide $NHC_PEER_URLS")
 	}
 	peerUrls := strings.Split(peerUrlsEnv, ",")
 
